@@ -9,7 +9,8 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const JWT_SECRET = "ygcvgvjkhbjnytchfvgjbnhcfvghbm()hgvjg345?/98";
 
-const mongoURL = "mongodb+srv://admin:0000@cluster0.nobdfdc.mongodb.net/test";
+const mongoURL =
+  "mongodb+srv://admin:0000@cluster0.u6ritbb.mongodb.net/?retryWrites=true&w=majority";
 
 // MONGODB CONNECTION
 mongoose

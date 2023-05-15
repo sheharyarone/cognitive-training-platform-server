@@ -2,10 +2,11 @@ const mongoose = require("mongoose");
 
 const UserDetailSchema = new mongoose.Schema(
   {
-    firstName: String,
-    lastName: String,
-    email: { type: String, unique: true }, // no repition of email
-    password: String,
+    firstName: { type: String, require: true },
+    lastName: { type: String, require: true },
+    email: { type: String, require: true, unique: true }, // no repition of email
+    password: { type: String, require: true },
+    isVerified: { type: Boolean, require: true, default: false },
   },
   {
     collection: "UserInfo",
