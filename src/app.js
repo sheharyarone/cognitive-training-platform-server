@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const authRoutes = require("./routes/authRoutes");
+const cors = require("cors");
 
 // Load environment variables
 dotenv.config();
@@ -20,6 +21,16 @@ mongoose
     console.error("Error connecting to the database:", error);
   });
 
+app.use(cors());
+
+app.use(
+  cors({
+    origin: "http://localhost:3000", // Allow requests from this origin
+    methods: ["GET", "POST"], // Allow specific HTTP methods
+    allowedHeaders: ["Content-Type", "Authorization"], // Allow specific headers
+  })
+);
+
 // Middleware
 app.use(express.json());
 
@@ -27,7 +38,7 @@ app.use(express.json());
 app.use("/auth", authRoutes);
 
 // Start the server
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 app.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
 });
