@@ -2,7 +2,9 @@ const bcrypt = require("bcrypt");
 const User = require("../models/userDetails");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
+const crypto = require("crypto");
 
+const verificationToken = crypto.randomBytes(16).toString("hex");
 const JWT_SECRET = process.env.JWT_SECRET;
 
 // SIGN UP API
@@ -20,10 +22,34 @@ exports.signup = async (req, res) => {
       lastName: lastName,
       email: email,
       password: encryptedPassword,
-      verificationToken: generateVerificationToken(),
+      verificationToken: verificationToken,
       isVerified: false,
     });
-    res.send({ status: "ok" });
+
+    // Send verification email to the user
+    const transporter = nodemailer.createTransport({
+      service: process.env.EMAIL_SERVICE_PROVIDER,
+      auth: {
+        user: process.env.EMAIL_ADDRESS,
+        pass: process.env.EMAIL_PASSWORD,
+      },
+    });
+
+    const mailOptions = {
+      from: process.env.EMAIL_SENDER_ADDRESS,
+      to: email,
+      subject: "Account Verification",
+      text: `Please click the following link to verify your account: ${verificationToken}`,
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error("Error sending verification email:", error);
+        return res.send({ status: "error" });
+      }
+      console.log("Verification email sent:", info.response);
+      res.send({ status: "ok" });
+    });
   } catch (error) {
     res.send({ status: "error" });
   }
@@ -46,7 +72,9 @@ exports.login = async (req, res) => {
       }
     }
     return res.json({ status: "error", error: "inValid Password" });
-  } catch (error) {}
+  } catch (error) {
+    res.json({ status: "not working" });
+  }
 };
 
 // USER INFO API
