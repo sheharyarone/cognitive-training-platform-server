@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const User = require("../models/userDetails");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
+const nodemailer = require("nodemailer");
 const crypto = require("crypto");
 
 const verificationToken = crypto.randomBytes(16).toString("hex");
@@ -51,6 +52,27 @@ exports.signup = async (req, res) => {
       res.send({ status: "ok" });
     });
   } catch (error) {
+    res.send({ status: "error" });
+  }
+};
+
+// GET API FOR VERIFICATION OF EMAIL
+exports.verifyEmail = async (req, res) => {
+  const { token } = req.params;
+
+  try {
+    const user = await User.findOne({ verificationToken: token });
+    if (!user) {
+      return res.send({ status: "invalid token" });
+    }
+
+    user.isVerified = true;
+    user.verificationToken = null;
+    await user.save();
+
+    res.send({ status: "ok" });
+  } catch (error) {
+    console.error("Error verifying email:", error);
     res.send({ status: "error" });
   }
 };
