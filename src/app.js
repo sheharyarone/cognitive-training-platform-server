@@ -6,6 +6,7 @@ const authRoutes = require("./routes/authRoutes");
 const memoryGameRoutes = require("./routes/memoryGameRoutes");
 const whackaMoleData = require("./routes/whackaMoleGameRoutes");
 const whackaMoleGetData = require("./routes/whackaMoleDataRetrievalRoutes");
+const memoryGameGetData = require("./routes/memoryGameDataRetrieveRoutes");
 const cors = require("cors");
 
 // Load environment variables
@@ -42,6 +43,7 @@ app.use(authRoutes);
 app.use(whackaMoleData);
 app.use(whackaMoleGetData);
 app.use(memoryGameRoutes);
+app.use(memoryGameGetData);
 
 // Start the server
 const port = process.env.PORT;
