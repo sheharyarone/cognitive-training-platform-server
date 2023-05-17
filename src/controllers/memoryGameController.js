@@ -1,5 +1,5 @@
 // Import the GameData model
-const memoryGameData = require("../models/memoryGameData");
+const memoryGameData = require("../models/memoryGameData_model");
 
 // Define the function to save game data
 exports.saveGameData = async (req, res) => {
