@@ -5,6 +5,7 @@ const dotenv = require("dotenv");
 const authRoutes = require("./routes/authRoutes");
 const memoryGameRoutes = require("./routes/memoryGameRoutes");
 const whackaMoleData = require("./routes/whackaMoleGameRoutes");
+const whackaMoleGetData = require("./routes/whackaMoleDataRetrievalRoutes");
 const cors = require("cors");
 
 // Load environment variables
@@ -39,6 +40,7 @@ app.use(express.json());
 // Routes
 app.use(authRoutes);
 app.use(whackaMoleData);
+app.use(whackaMoleGetData);
 app.use(memoryGameRoutes);
 
 // Start the server
