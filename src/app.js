@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const authRoutes = require("./routes/authRoutes");
+const memoryGameRoutes = require("./routes/memoryGameRoutes");
 const cors = require("cors");
 
 // Load environment variables
@@ -35,7 +36,8 @@ app.use(
 app.use(express.json());
 
 // Routes
-app.use("/auth", authRoutes);
+app.use(authRoutes);
+app.use(memoryGameRoutes);
 
 // Start the server
 const port = process.env.PORT;

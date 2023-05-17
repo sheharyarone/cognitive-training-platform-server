@@ -6,8 +6,6 @@ const UserDetailSchema = new mongoose.Schema(
     lastName: { type: String, require: true },
     email: { type: String, require: true, unique: true }, // no repition of email
     password: { type: String, require: true },
-    verificationToken: { type: String },
-    isVerified: { type: Boolean, require: true, default: false },
   },
   {
     collection: "UserInfo",

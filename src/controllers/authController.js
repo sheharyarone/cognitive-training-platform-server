@@ -2,13 +2,10 @@ const bcrypt = require("bcrypt");
 const User = require("../models/userDetails");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
+const nodemailer = require("nodemailer");
+const crypto = require("crypto");
 
-// const nodemailer = require("nodemailer");
-// const { v4: uuidv4 } = require("uuid");
-// const verificationToken = uuidv4();
-
-// const link = `http://localhost:3000/users/confirm/${verificationToken}`;
-
+const verificationToken = crypto.randomBytes(16).toString("hex");
 const JWT_SECRET = process.env.JWT_SECRET;
 
 // SIGN UP API
@@ -29,38 +26,7 @@ exports.signup = async (req, res) => {
       verificationToken: verificationToken,
       isVerified: false,
     });
-
-    // Send verification email to the user
-    //   const transporter = nodemailer.createTransport({
-    //     host: "smtp.gmail.com",
-    //     port: 465,
-    //     secure: true,
-    //     auth: {
-    //       user: "sheharyarone@gmail.com",
-    //       pass: "Janeman@12",
-    //     },
-    //   });
-
-    //   const mailOptions = {
-    //     from: "sheharyarone@gmail.com",
-    //     to: email,
-    //     subject: "Account Verification",
-    //     text: "Welcome",
-    //     html: `
-    //     <div>
-    //     <a href=${link}>Click here to activate the account</a>
-    //     </div>
-    //     `,
-    //   };
-
-    //   transporter.sendMail(mailOptions, (error, info) => {
-    //     if (error) {
-    //       console.error("Error sending verification email:", error);
-    //       return res.send({ status: "error" });
-    //     }
-    //     console.log("Verification email sent:", info.response);
-    //     res.send({ status: "ok" });
-    //   });
+    res.send({ status: "ok" });
   } catch (error) {
     res.send({ status: "error" });
   }
