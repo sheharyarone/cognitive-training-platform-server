@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const gameDataSchema = new mongoose.Schema(
   {
     email: String,
+    date: Date,
     totalTime: Number,
     flips: Number,
   },
